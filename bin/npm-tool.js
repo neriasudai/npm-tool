@@ -48,5 +48,3 @@ for (const file of files) {
 }
 
 console.log("npm-tool");
-
-// hello
