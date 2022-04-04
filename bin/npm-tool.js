@@ -13,6 +13,21 @@ const argv = yargs(hideBin(process.argv))
     type: "boolean",
     description: "show hidden files",
   })
+  .option("color", {
+    alias: "c",
+    type: "boolean",
+    description: "colorize the output",
+  })
+  .option("backGround", {
+    alias: "b",
+    type: "boolean",
+    description: "colorize the backGround output",
+  })
+  .option("version", {
+    alias: "v",
+    type: "boolean",
+    description: "show version",
+  })
   .parse();
 const folder = argv._[0];
 let files = fs.readdirSync(folder);
@@ -21,7 +36,15 @@ if (!argv.hidden) {
 }
 
 for (const file of files) {
-  console.log(clc.greenBright(file));
+  if (argv.color) {
+    console.log(clc.greenBright(file));
+  } else if (argv.backGround) {
+    console.log(clc.bgWhite(clc.black(file)));
+  } else if (argv.color && argv.backGround) {
+    console.log(clc.bgYellow(clc.black(file)));
+  } else {
+    console.log(file);
+  }
 }
 
 console.log("npm-tool");
